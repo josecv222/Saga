@@ -864,7 +864,7 @@ fn fade_edges(app: &mut App, area: Rect) {
 // ---------------------------------------------------------------- estante
 fn shelf(app: &mut App, area: Rect, e: f32) {
     let th = app.ui.th;
-    let bh = (app.set.grid_size * 1.52).clamp(180.0, 380.0);
+    let bh = (app.set.grid_size * 1.78).clamp(210.0, 440.0);
     let gap_top = 46.0;
     let board = 16.0;
     let rowh = bh + gap_top + board + 26.0;
@@ -1003,19 +1003,19 @@ fn shelf(app: &mut App, area: Rect, e: f32) {
         }
         if let Some(b) = app.book(bid).cloned() {
             // título grande y autor debajo, para leerlo de un vistazo
-            let tt = app.ui.t.fit(fonts().ui_b, 20.0, &b.title, area.w * 0.7);
-            let au = app.ui.t.fit(fonts().ui, 14.5, &b.author_line(), area.w * 0.7);
-            let w = app.ui.t.measure(fonts().ui_b, 20.0, &tt).max(app.ui.t.measure(fonts().ui, 14.5, &au)) + 56.0;
-            let pr = rect(area.cx() - w / 2.0, area.b() - 82.0, w, 66.0);
+            let tt = app.ui.t.fit(fonts().ui_b, 24.0, &b.title, area.w * 0.7);
+            let au = app.ui.t.fit(fonts().ui, 16.0, &b.author_line(), area.w * 0.7);
+            let w = app.ui.t.measure(fonts().ui_b, 24.0, &tt).max(app.ui.t.measure(fonts().ui, 16.0, &au)) + 64.0;
+            let pr = rect(area.cx() - w / 2.0, area.b() - 92.0, w, 76.0);
             app.ui.d.shadow(pr.off(0.0, 8.0), 20.0, 26.0, Color::BLACK.a(0.45));
             app.ui.d.boxed(pr, 20.0, th.raised, 1.0, th.line);
-            app.ui.text_c(fonts().ui_b, 20.0, pr.cx(), pr.y + 24.0, &tt, th.text);
-            app.ui.text_c(fonts().ui, 14.5, pr.cx(), pr.y + 47.0, &au, th.text2);
+            app.ui.text_c(fonts().ui_b, 24.0, pr.cx(), pr.y + 28.0, &tt, th.text);
+            app.ui.text_c(fonts().ui, 16.0, pr.cx(), pr.y + 54.0, &au, th.text2);
         }
     }
 }
 fn spine_w(b: &Book, h: f32) -> f32 {
-    (book3d::thickness(b.pages) * 2.2 * h).clamp(28.0, 54.0)
+    (book3d::thickness(b.pages) * 2.3 * h).clamp(34.0, 62.0)
 }
 /// Los libros de un estante no miden todos lo mismo.
 fn height_var(id: i64) -> f32 {

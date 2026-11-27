@@ -327,15 +327,15 @@ fn draw_in(ui: &mut Ui, p: &Pose, l: &Look, vp: (f32, f32), mirror: Option<f32>,
     }
 }
 fn spine_text(ui: &mut Ui, x: &Xf, l: &Look, w: f32, h: f32, t: f32, alpha: f32) {
-    let size = (t * 0.50).clamp(5.0, 20.0);
+    let size = (t * 0.52).clamp(5.0, 24.0);
     let fg = if l.color.lum() > 0.55 { Color::hex(0x1C1A17) } else { Color::hex(0xF4EEDF) };
     let room = h * 0.80;
     let asz = size * 0.76;
     let author = ui.t.fit(fonts().ui, asz, &l.author, room * 0.34);
     let aw = if l.author.is_empty() { 0.0 } else { ui.t.measure(fonts().ui, asz, &author) };
-    let title = ui.t.fit(fonts().ui_m, size, &l.title, room - aw - 14.0);
+    let title = ui.t.fit(fonts().ui_b, size, &l.title, room - aw - 14.0);
     let dpi = ui.d.dpi;
-    for (s, f, sz, at, a) in [(title, fonts().ui_m, size, -h / 2.0 + h * 0.09, 0.95), (author, fonts().ui, asz, h / 2.0 - h * 0.09 - aw, 0.75)] {
+    for (s, f, sz, at, a) in [(title, fonts().ui_b, size, -h / 2.0 + h * 0.09, 1.0), (author, fonts().ui_m, asz, h / 2.0 - h * 0.09 - aw, 0.82)] {
         let (qs, _) = ui.t.quads(f, sz, &s, 0.0, dpi);
         let mut v = Vec::with_capacity(qs.len() * 6);
         for (r, uv) in qs {
@@ -350,7 +350,15 @@ fn spine_text(ui: &mut Ui, x: &Xf, l: &Look, w: f32, h: f32, t: f32, alpha: f32)
                 misc: [3.0, l.dim, 0.0, 0.0],
                 clip: [0.0; 4],
             };
-            let (a0, b0, a1, b1) = (mk(r.x, r.y, uv[0], uv[1]), mk(r.r(), r.y, uv[2], uv[1]), mk(r.x, r.b(), uv[0], uv[3]), mk(r.r(), r.b(), uv[2], uv[3]));
+            let (mut a0, mut b0, mut a1, mut b1) = (mk(r.x, r.y, uv[0], uv[1]), mk(r.r(), r.y, uv[2], uv[1]), mk(r.x, r.b(), uv[0], uv[3]), mk(r.r(), r.b(), uv[2], uv[3]));
+            // cada letra encajada en píxeles enteros: nítida en vez de emborronada
+            let snap = |q: f32| (q * dpi).round() / dpi - q;
+            let (min_x, min_y) = (a0.pos[0].min(b0.pos[0]).min(a1.pos[0]).min(b1.pos[0]), a0.pos[1].min(b0.pos[1]).min(a1.pos[1]).min(b1.pos[1]));
+            let (dx, dy) = (snap(min_x), snap(min_y));
+            for q in [&mut a0, &mut b0, &mut a1, &mut b1] {
+                q.pos[0] += dx;
+                q.pos[1] += dy;
+            }
             v.extend([a0, b0, a1, a1, b0, b1]);
         }
         ui.d.tris(TEX_ATLAS, &v);

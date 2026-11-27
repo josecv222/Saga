@@ -7,7 +7,7 @@
 
 ## Instalar
 
-1. Descarga **`Saga-1.0.1-Instalador.rar`** (o directamente `Saga-Instalador.exe`) desde [Releases](https://github.com/josecv222/Saga/releases/latest).
+1. Descarga **`Saga-1.0.2-Instalador.rar`** (o directamente `Saga-Instalador.exe`) desde [Releases](https://github.com/josecv222/Saga/releases/latest).
 2. Descomprime y abre `Saga-Instalador.exe` → **Instalar**.
 
 Se instala solo para tu usuario, sin permisos de administrador, en `%LOCALAPPDATA%\Programs\Saga`, y crea:
