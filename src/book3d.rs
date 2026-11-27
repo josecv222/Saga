@@ -327,10 +327,10 @@ fn draw_in(ui: &mut Ui, p: &Pose, l: &Look, vp: (f32, f32), mirror: Option<f32>,
     }
 }
 fn spine_text(ui: &mut Ui, x: &Xf, l: &Look, w: f32, h: f32, t: f32, alpha: f32) {
-    let size = (t * 0.44).clamp(5.0, 17.0);
+    let size = (t * 0.50).clamp(5.0, 20.0);
     let fg = if l.color.lum() > 0.55 { Color::hex(0x1C1A17) } else { Color::hex(0xF4EEDF) };
     let room = h * 0.80;
-    let asz = size * 0.72;
+    let asz = size * 0.76;
     let author = ui.t.fit(fonts().ui, asz, &l.author, room * 0.34);
     let aw = if l.author.is_empty() { 0.0 } else { ui.t.measure(fonts().ui, asz, &author) };
     let title = ui.t.fit(fonts().ui_m, size, &l.title, room - aw - 14.0);
